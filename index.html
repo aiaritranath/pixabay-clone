@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pixo - Free photos, illustrations and vectors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1fa86a;--gd:#0d6b44;--ink:#17202a;--mute:#5d6b78;--line:#e3e8ec;--soft:#f3f6f8}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--ink);background:#fff}
+:focus-visible{outline:3px solid #7ad9ac;outline-offset:2px}
+button,select,input{font:inherit}
+.hero{background:linear-gradient(135deg,#0b3328,#10664a 55%,#1fa86a);color:#fff;padding:20px 20px 36px;text-align:center}
+.brand{display:block;text-align:left;max-width:1200px;margin:0 auto;font-weight:800;font-size:24px;letter-spacing:-.03em;color:#fff;text-decoration:none}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.1;letter-spacing:-.03em;margin:36px auto 22px;max-width:720px;font-weight:800}
+#f{display:flex;max-width:720px;margin:0 auto;background:#fff;border-radius:999px;padding:6px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+#f:focus-within{outline:3px solid #7ad9ac}
+#q{flex:1;min-width:0;border:0;background:none;padding:10px 18px;font-size:17px;color:var(--ink);outline:none}
+#f button{border:0;border-radius:999px;background:var(--g);color:#fff;font-weight:700;padding:0 26px;cursor:pointer}
+#f button:hover{background:var(--gd)}
+.cats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:960px;margin:22px auto 0}
+.chip{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:5px 14px;font-size:14px;cursor:pointer;text-transform:capitalize}
+.chip[aria-pressed=true]{background:#fff;color:var(--gd);border-color:#fff;font-weight:700}
+.chip.dark{border-color:var(--line);background:var(--soft);color:var(--ink)}
+.bar{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between;padding:10px 20px}
+#status{color:var(--mute);font-size:14px}
+.filters{display:flex;gap:14px;flex-wrap:wrap}
+.filters label{font-size:14px;color:var(--mute);display:flex;gap:6px;align-items:center}
+select{border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;color:var(--ink)}
+main{padding:20px;max-width:1400px;margin:0 auto}
+.grid{columns:250px;column-gap:14px}
+.card{display:block;width:100%;margin:0 0 14px;padding:0;border:0;border-radius:10px;overflow:hidden;position:relative;break-inside:avoid;background:var(--soft);cursor:zoom-in}
+.card img{display:block;width:100%;height:auto}
+.card span{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 9px;display:flex;justify-content:space-between;font-size:13px;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.65));opacity:0;transition:opacity .15s}
+.card:hover span,.card:focus-visible span{opacity:1}
+@media (hover:none){.card span{opacity:1}}
+.more{text-align:center;padding:10px 0 30px}
+#more{border:2px solid var(--g);background:#fff;color:var(--gd);font-weight:700;border-radius:999px;padding:10px 28px;cursor:pointer}
+#more:hover{background:var(--g);color:#fff}
+footer{border-top:1px solid var(--line);padding:22px;text-align:center;color:var(--mute);font-size:14px}
+footer a{color:var(--gd)}
+dialog{border:0;border-radius:14px;padding:0;width:min(1000px,94vw);max-height:94vh;overflow:auto;color:var(--ink)}
+dialog::backdrop{background:rgba(6,16,12,.75)}
+#dimg{display:block;width:100%;max-height:68vh;object-fit:contain;background:#0b1511}
+.dm{padding:16px 20px 20px;display:grid;gap:14px}
+.row,.acts{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.acts{justify-content:flex-start;gap:10px}
+.acts .sp{margin-left:auto;display:flex;gap:10px}
+#duser{font-weight:700;color:var(--ink)}
+#dstats{display:flex;gap:16px;color:var(--mute);font-size:14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:0;border-radius:999px;padding:9px 20px;background:var(--g);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--gd)}
+.btn.alt{background:var(--soft);color:var(--ink)}
+.btn.alt:hover{background:var(--line)}
+.btn:disabled{opacity:.4;cursor:default}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="brand" href="/">Pixo</a>
+  <h1>Free photos, illustrations and vectors</h1>
+  <form id="f" role="search">
+    <input id="q" type="search" placeholder="Search images, e.g. mountain lake" aria-label="Search images" autocomplete="off" maxlength="100">
+    <button>Search</button>
+  </form>
+  <div class="cats" id="cats"></div>
+</header>
+
+<div class="bar">
+  <div id="status" aria-live="polite"></div>
+  <div class="filters">
+    <label>Type <select id="image_type"><option value="all">All</option><option value="photo">Photos</option><option value="illustration">Illustrations</option><option value="vector">Vectors</option></select></label>
+    <label>Orientation <select id="orientation"><option value="all">Any</option><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select></label>
+    <label>Sort by <select id="order"><option value="popular">Popular</option><option value="latest">Latest</option></select></label>
+  </div>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+  <div class="more"><button id="more" hidden>Load more</button></div>
+</main>
+
+<footer>Images provided by <a href="https://pixabay.com" target="_blank" rel="noopener">Pixabay</a>. Results load live from the Pixabay API.</footer>
+
+<dialog id="dlg" aria-label="Image details">
+  <img id="dimg" alt="">
+  <div class="dm">
+    <div class="row"><a id="duser" target="_blank" rel="noopener"></a><div id="dstats"></div></div>
+    <div id="dtags" class="tags"></div>
+    <div class="acts">
+      <a id="dfull" class="btn" target="_blank" rel="noopener">Open full size</a>
+      <a id="dpix" class="btn alt" target="_blank" rel="noopener">View on Pixabay</a>
+      <div class="sp">
+        <button id="prev" class="btn alt" type="button">Previous</button>
+        <button id="next" class="btn alt" type="button">Next</button>
+        <button id="dclose" class="btn alt" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const n = v => Number(v).toLocaleString();
+const CATS = ['backgrounds','fashion','nature','science','education','feelings','health','people','religion','places','animals','industry','computer','food','sports','transportation','travel','buildings','business','music'];
+const S = {q:'', image_type:'all', orientation:'all', order:'popular', category:'', page:1};
+let hits = [], cur = 0, req = 0;
+const dlg = $('#dlg');
+
+$('#cats').innerHTML = CATS.map(c => `<button class="chip" type="button" aria-pressed="false" data-c="${c}">${c}</button>`).join('');
+
+const card = (h, i) => `<button class="card" data-i="${i}" aria-label="Open image: ${esc(h.tags)}"><img src="${esc(h.webformatURL)}" width="${h.webformatWidth}" height="${h.webformatHeight}" alt="${esc(h.tags)}" loading="lazy"><span><b>${esc(h.user)}</b><small>♥ ${n(h.likes)}</small></span></button>`;
+
+async function load(reset) {
+  const my = ++req;
+  if (reset) { S.page = 1; hits = []; $('#grid').innerHTML = ''; }
+  const start = hits.length;
+  $('#status').textContent = 'Loading…';
+  $('#more').hidden = true;
+  try {
+    const p = new URLSearchParams();
+    for (const k in S) if (S[k] && S[k] !== 'all') p.set(k, S[k]);
+    const r = await fetch('/api/search?' + p);
+    const d = await r.json().catch(() => ({}));
+    if (my !== req) return;
+    if (!r.ok) throw new Error(d.error || 'Something went wrong.');
+    hits = hits.concat(d.hits);
+    $('#grid').insertAdjacentHTML('beforeend', d.hits.map((h, i) => card(h, start + i)).join(''));
+    const forQ = S.q ? ` for “${S.q}”` : '';
+    $('#status').textContent = hits.length ? `${n(d.total)} images${forQ}` : `No images found${forQ}. Try another word or clear the filters.`;
+    $('#more').hidden = hits.length >= d.totalHits;
+  } catch (e) {
+    if (my !== req) return;
+    if (!reset && S.page > 1) S.page--;
+    $('#status').textContent = 'Could not load images: ' + e.message;
+    $('#more').hidden = !hits.length;
+  }
+}
+
+function search() {
+  history.replaceState(null, '', S.q ? '?q=' + encodeURIComponent(S.q) : location.pathname);
+  load(true);
+}
+
+function show(i) {
+  cur = i;
+  const h = hits[i];
+  $('#dimg').src = h.largeImageURL;
+  $('#dimg').alt = h.tags;
+  const u = $('#duser');
+  u.textContent = 'by ' + h.user;
+  u.href = `https://pixabay.com/users/${encodeURIComponent(h.user)}-${h.user_id}/`;
+  $('#dstats').innerHTML = `<span>${n(h.views)} views</span><span>${n(h.downloads)} downloads</span><span>${n(h.likes)} likes</span>`;
+  $('#dtags').innerHTML = h.tags.split(',').map(t => `<button type="button" class="chip dark" data-t="${esc(t.trim())}">${esc(t.trim())}</button>`).join('');
+  $('#dfull').href = h.largeImageURL;
+  $('#dpix').href = h.pageURL;
+  $('#prev').disabled = i === 0;
+  $('#next').disabled = i >= hits.length - 1;
+  if (!dlg.open) dlg.showModal();
+}
+
+$('#f').addEventListener('submit', e => { e.preventDefault(); S.q = $('#q').value.trim(); search(); });
+$('#cats').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const on = b.getAttribute('aria-pressed') !== 'true';
+  document.querySelectorAll('#cats .chip').forEach(x => x.setAttribute('aria-pressed', 'false'));
+  b.setAttribute('aria-pressed', String(on));
+  S.category = on ? b.dataset.c : '';
+  search();
+});
+['image_type', 'orientation', 'order'].forEach(id => $('#' + id).addEventListener('change', e => { S[id] = e.target.value; load(true); }));
+$('#more').addEventListener('click', () => { S.page++; load(false); });
+$('#grid').addEventListener('click', e => { const c = e.target.closest('.card'); if (c) show(+c.dataset.i); });
+
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' && cur > 0) show(cur - 1);
+  if (e.key === 'ArrowRight' && cur < hits.length - 1) show(cur + 1);
+});
+$('#dclose').onclick = () => dlg.close();
+$('#prev').onclick = () => show(cur - 1);
+$('#next').onclick = () => show(cur + 1);
+$('#dtags').addEventListener('click', e => {
+  const b = e.target.closest('[data-t]'); if (!b) return;
+  dlg.close();
+  $('#q').value = S.q = b.dataset.t;
+  search();
+  scrollTo({top: 0});
+});
+
+const q0 = (new URLSearchParams(location.search).get('q') || '').slice(0, 100);
+$('#q').value = S.q = q0;
+load(true);
+</script>
+</body>
+</html>
